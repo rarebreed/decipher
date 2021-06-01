@@ -1,0 +1,58 @@
+#!/bin/sh
+
+usage() {
+   echo "-p|--project    project name"
+}
+
+project=""
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -p | --project )
+            shift
+            project="$1"
+            ;;
+        -h | --help )
+            usage
+            exit
+            ;;
+        * )
+            shift
+            ;;
+    esac
+done
+
+if [ "$project" == "" ]; then
+  usage
+fi
+
+mkdir -p "$project"
+echo "Created $project"
+cd "$project" || exit 1
+echo "Now in $project"
+
+# Create src and test directories
+mkdir -p src/main/kotlin
+mkdir -p src/main/java
+mkdir -p src/main/resources
+mkdir -p src/test/kotlin
+
+# Create a basic README
+cat << EOF >> README.md
+# ${project}
+
+Describe what your project does
+EOF
+
+# Create a default build.gradle.kts
+cat << EOF >> build.gradle.kts
+version = "0.1.0"
+
+plugins {
+
+}
+
+dependencies {
+
+}
+EOF
