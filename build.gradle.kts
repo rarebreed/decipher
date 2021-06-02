@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.utils.addToStdlib.assertedCast
-import org.jetbrains.kotlin.utils.addToStdlib.cast
-
 version = "0.1.0"
 group = "app.khadga"
 
@@ -8,6 +5,7 @@ plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     kotlin("jvm") version "1.5.10"
     kotlin("plugin.serialization") version "1.5.10"
+    kotlin("kapt") version "1.5.10"
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
@@ -19,7 +17,7 @@ repositories {
 }
 
 tasks.register("subproject") {
-    val subproject: String = project.properties.get("subproject").cast()
+    val subproject: String by project
     doLast {
         // Create the source dirs
         mkdir("$subproject/src/main/java")
@@ -50,16 +48,25 @@ tasks.register("subproject") {
 
         // Add to settings.gradle.kts
         val settings = file("settings.gradle.kts").readText()
-        val includeRe = """include\(\s*(.*)\)""".toRegex()
+        val includeRe = """include\((\s+(.*)\s*)+\)""".toRegex()
         val matched = includeRe.find(settings)
         if (matched != null) {
-            val (includes) = matched.destructured
-            val withSub = includes.split(",").map {
-                it.replace("""\s+""".toRegex(), "")
-            } + listOf(subproject)
-            val replace = withSub.sorted().joinToString(",\n")
-            println(replace)
-            includeRe.replace(settings, replace)
+            println(matched.groupValues[0])
+            println("===========")
+            val includes = matched.groupValues.first()
+                .replace("include(", "")
+                .replace(")", "")
+                .replace("""\s+""".toRegex(), "")
+                .split(",") + listOf(""""$subproject"""")
+
+            val replace = includes.sorted().joinToString(",\n") {
+                "    $it"
+            }
+            val sub = "include(\n$replace\n)"
+            println(sub)
+            val newSettings = includeRe.replace(settings, sub)
+            println(newSettings)
+            file("settings.gradle.kts").writeText(newSettings)
         }
     }
 }

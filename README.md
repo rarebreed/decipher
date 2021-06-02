@@ -84,5 +84,5 @@ avoid many common problems:
 - Design computations as pipelines rather than imperative sequences
 - Use immutable data as much as possible
 - Minimize functional dependencies either through DI tools like koin, or simple argument passing
-- Try to model functions as curried functions
+- Model functions as curried functions (auto-implemented with annotation processor)
 
