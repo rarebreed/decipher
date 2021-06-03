@@ -1,7 +1,5 @@
 package app.khadga.alonzo.annotations
 
-import java.io.File
-import java.lang.annotation.RetentionPolicy
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.ElementKind
@@ -39,26 +37,17 @@ class CurryProcessor : AbstractProcessor() {
             when(e.kind) {
                 ElementKind.METHOD -> {
                     val type = e.asType() as ExecutableType
+                    val argNames = type.parameterTypes.map { it.toString() }
+                    println(argNames)
                 }
                 else -> {}
             }
         }
 
-        val generatedKtFile = kotlinFile("test.generated") {
-            for (element in annotatedElements) {
-                val typeElement = element.toTypeElementOrNull() ?: continue
-
-                property("simpleClassName") {
-                    receiverType(typeElement.qualifiedName.toString())
-                    getterExpression("this::class.java.simpleName")
-                }
-            }
-        }
-
-        File(kaptKotlinGeneratedDir, "testGenerated.kt").apply {
-            parentFile.mkdirs()
-            writeText(generatedKtFile.accept(PrettyPrinter(PrettyPrinterConfiguration())))
-        }
+//        File(kaptKotlinGeneratedDir, "testGenerated.kt").apply {
+//            parentFile.mkdirs()
+//            writeText(generatedKtFile.accept(PrettyPrinter(PrettyPrinterConfiguration())))
+//        }
 
         return true
     }
