@@ -11,6 +11,10 @@ rootProject.name = "decipher"
 include(
     "alonzo",
     "common-kotlin-lib",
+    "ignite",
     "math",
-    "subproject"
+    "pile",
+    "reveles",
+    "subproject",
+    "venturi"
 )

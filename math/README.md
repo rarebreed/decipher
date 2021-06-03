@@ -1,3 +1,3 @@
 # math
 
-Explain what this project is about
+Any helper extension functions or additional functionality for math kmath or multik

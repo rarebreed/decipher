@@ -54,7 +54,7 @@ graphing libraries using jupyter to help explain things.
 
 ## Deep learning frameworks
 
-i have chosen tensorflow as the library to use because it is popular and has a large set of
+I have chosen tensorflow as the library to use because it is popular and has a large set of
 algorithms already defined.  However, for pedantic purposes, we will also build our own neural
 net, using existing higher dimensional algebra libraries.
 
@@ -81,8 +81,8 @@ even start using krustlet to build webassembly runtimes
 ## Functional Programming
 
 As much as possible, decipher will use FP concepts.  We might even talk about Functors, Applicatives and Monads as
-interfaces, or Monoids and Sequences as datatypes.  But most importantly, we will introduce best practices to 
-avoid many common problems:
+interfaces, or Monoids and Sequences as datatypes.  But most importantly, we will introduce best practices avoiding many
+common problems:
 
 - Use the arrow library to provide better data types and interfaces
 - Use Either instead of throwing exceptions
@@ -96,3 +96,17 @@ avoid many common problems:
 
 The `alonzo` subproject contains some helper functions, as well as an annotation processor that can autocurry a function
 or class by generating new code that creates curried versions of the functions.
+
+## Roadmap
+
+- Finish the common-kotlin-lib custom plugin, so we can use it in our other projects
+    - Publish the plugin to plugins.gradle.com
+- Finish up alonzo, to generate curried functions and methods in classes
+- Write up some notes in `math` in jupyter notebook
+    - Practice problems in differential and integral calculus
+    - Practice problems in linear algebra
+    - Practice problems in statistics
+- `reveles` subproject to create a neural net from scratch 
+- `ignite` subproject to play with spark
+- `venturi` subproject to play with airflow
+- `pile` subproject to play with localstack

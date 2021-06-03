@@ -10,8 +10,8 @@ dependencies {
 }
 
 tasks.register("make") {
-    val subproject: String by project
-    val subDir = "../$subproject"
+    val dir: String by project
+    val subDir = "../$dir"
     doLast {
         // Create the source dirs
         mkdir("$subDir/src/main/java")
@@ -21,7 +21,7 @@ tasks.register("make") {
 
         // Create a dummy README.md
         file("$subDir/README.md").writeText("""
-            # $subproject
+            # $dir
             
             Explain what this project is about
         """.trimIndent())
@@ -29,7 +29,7 @@ tasks.register("make") {
         // Create a dummy build.gradle.kts
         file("$subDir/build.gradle.kts").writeText("""
             version = "0.1.0"
-            group = "app.khadga"
+            group = "app.khadga.$dir"
             
             plugins {
             
@@ -51,7 +51,7 @@ tasks.register("make") {
                 .replace("include(", "")
                 .replace(")", "")
                 .replace("""\s+""".toRegex(), "")
-                .split(",") + listOf(""""$subproject"""")
+                .split(",") + listOf(""""$dir"""")
 
             val replace = includes.sorted().joinToString(",\n") {
                 "    $it"
