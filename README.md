@@ -29,6 +29,12 @@ There may also be some kotlinjs examples too, to make use of tensorflowjs
 This project uses gradle, and specifically some advanced gradle with multiprojects and build
 scripts that define gradle extensions.
 
+### common-kotlin-lib 
+
+The `common-kotlin-lib` subproject is a custom gradle plugin, that when included in the `plugins` section, will
+automatically add kotlin dependencies and plugins, and some very common dependencies (eg, jackson).  This custom plugin
+can also be used as a template to build other custom plugins and new tasks.
+
 ## Jupyter and Zeppelin
 
 The nature of decipher is educational, so notebooks are a great boon with this.  Examples of
@@ -86,3 +92,7 @@ avoid many common problems:
 - Minimize functional dependencies either through DI tools like koin, or simple argument passing
 - Model functions as curried functions (auto-implemented with annotation processor)
 
+### alonzo
+
+The `alonzo` subproject contains some helper functions, as well as an annotation processor that can autocurry a function
+or class by generating new code that creates curried versions of the functions.
