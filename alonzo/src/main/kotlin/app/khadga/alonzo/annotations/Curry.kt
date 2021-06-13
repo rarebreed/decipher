@@ -45,6 +45,8 @@ class CurryProcessor : AbstractProcessor() {
                     type.parameterTypes.forEach {
                         println("param is $it")
                     }
+                    val argNames = type.parameterTypes.map { it.toString() }
+                    println(argNames)
                 }
                 else -> {}
             }
@@ -61,6 +63,7 @@ class CurryProcessor : AbstractProcessor() {
 //            }
 //        }
 //
+
 //        File(kaptKotlinGeneratedDir, "testGenerated.kt").apply {
 //            parentFile.mkdirs()
 //            writeText(generatedKtFile.accept(PrettyPrinter(PrettyPrinterConfiguration())))

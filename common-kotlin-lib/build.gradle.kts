@@ -8,35 +8,60 @@
 
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
-    kotlin("jvm")
-    kotlin("plugin.serialization")
+    kotlin("jvm") version "1.5.10"
+    kotlin("plugin.serialization") version "1.5.10"
 
-    // Apply the java-library plugin for API and implementation separation.
+    // Apply the java-library plugin for API and implementation separation. Provides "implementation" configuration
     `java-library`
+    // Required to create a plugin
+    `java-gradle-plugin`
 }
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    // This is required to add plugins as dependencies
+    gradlePluginPortal()
 }
+
+val kotlinVersion: String by project
 
 dependencies {
     compileOnly(gradleApi())
 
-    // Align versions of all Kotlin components
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlinVersion")) {
+        description = "align versions of all Kotlin components"
+    }
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion") {
+        description = "Use JDK 8 version standard lib"
+    }
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion") {
+        description = "Reflection for kotlin"
+    }
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0") {
+        description = "Coroutines for kotlin"
+    }
 
-    // Use the Kotlin JDK 8 standard library.
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-
-    // This dependency is exported to consumers, that is to say found on their compile classpath.
-    //api("org.apache.commons:commons-math3:3.6.1")
+    // These dependencies will allow this custom plugin to automatically be applied to projects which use it
+    runtimeOnly("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:$kotlinVersion") {
+        description = "Provides this plugin to our custom plugin, so that it is automatically applied"
+    }
+    runtimeOnly("org.jetbrains.kotlin.kapt:org.jetbrains.kotlin.kapt.gradle.plugin:$kotlinVersion") {
+        description = "Provides kapt annotations for projects"
+    }
 
     testImplementation("io.kotest:kotest-runner-junit5:4.5.0")
     testImplementation("io.kotest:kotest-assertions-core:4.5.0")
+}
+
+// Configure the plugin
+gradlePlugin {
+    plugins {
+        create("common-kotlin-lib") {
+            id = "app.khadga.common.kotlin.lib"
+            implementationClass = "app.khadga.decipher.KotlinLibrary"
+        }
+    }
 }
 
 java {
