@@ -1,5 +1,6 @@
 package app.khadga.alonzo.annotations
 
+import com.google.auto.service.AutoService
 import java.io.File
 import java.lang.annotation.RetentionPolicy
 import javax.annotation.processing.*
@@ -16,12 +17,14 @@ annotation class Curry
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedAnnotationTypes("app.khadga.alonzo.annotations.Curry")
 @SupportedOptions(CurryProcessor.KAPT_KOTLIN_GENERATED_OPTION_NAME)
+@AutoService(Processor::class)
 class CurryProcessor : AbstractProcessor() {
     companion object {
         const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"
     }
 
     override fun process(annotations: MutableSet<out TypeElement>?, roundEnv: RoundEnvironment): Boolean {
+        println("In process")
         val annotatedElements = roundEnv.getElementsAnnotatedWith(Curry::class.java)
         if (annotatedElements.isEmpty()) return false
 
@@ -39,26 +42,29 @@ class CurryProcessor : AbstractProcessor() {
             when(e.kind) {
                 ElementKind.METHOD -> {
                     val type = e.asType() as ExecutableType
+                    type.parameterTypes.forEach {
+                        println("param is $it")
+                    }
                 }
                 else -> {}
             }
         }
 
-        val generatedKtFile = kotlinFile("test.generated") {
-            for (element in annotatedElements) {
-                val typeElement = element.toTypeElementOrNull() ?: continue
-
-                property("simpleClassName") {
-                    receiverType(typeElement.qualifiedName.toString())
-                    getterExpression("this::class.java.simpleName")
-                }
-            }
-        }
-
-        File(kaptKotlinGeneratedDir, "testGenerated.kt").apply {
-            parentFile.mkdirs()
-            writeText(generatedKtFile.accept(PrettyPrinter(PrettyPrinterConfiguration())))
-        }
+//        val generatedKtFile = kotlinFile("test.generated") {
+//            for (element in annotatedElements) {
+//                val typeElement = element.toTypeElementOrNull() ?: continue
+//
+//                property("simpleClassName") {
+//                    receiverType(typeElement.qualifiedName.toString())
+//                    getterExpression("this::class.java.simpleName")
+//                }
+//            }
+//        }
+//
+//        File(kaptKotlinGeneratedDir, "testGenerated.kt").apply {
+//            parentFile.mkdirs()
+//            writeText(generatedKtFile.accept(PrettyPrinter(PrettyPrinterConfiguration())))
+//        }
 
         return true
     }

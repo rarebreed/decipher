@@ -13,3 +13,7 @@ repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
+
+dependencies {
+    implementation("com.google.auto.service:auto-service:1.0")
+}
