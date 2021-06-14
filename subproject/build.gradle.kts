@@ -1,9 +1,10 @@
 version = "0.1.0"
-group = "app.khadga"
+group = "com.github.rarebreed"
 
-plugins {
-
-}
+apply("com.github.rarebreed:common-kotlin-lib")
+//plugins {
+//    id("common.kotlin.lib") version "0.1.0-SNAPSHOT"
+//}
 
 dependencies {
 
