@@ -1,10 +1,10 @@
 version = "0.1.0"
 group = "com.github.rarebreed"
 
-apply("com.github.rarebreed:common-kotlin-lib")
-//plugins {
-//    id("common.kotlin.lib") version "0.1.0-SNAPSHOT"
-//}
+//apply("com.github.rarebreed:common-kotlin-lib")
+plugins {
+   id("com.github.rarebreed.common.kotlin.lib") version "0.1.0-SNAPSHOT"
+}
 
 dependencies {
 
