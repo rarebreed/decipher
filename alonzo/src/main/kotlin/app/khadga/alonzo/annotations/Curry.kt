@@ -29,7 +29,10 @@ class CurryProcessor : AbstractProcessor() {
         if (annotatedElements.isEmpty()) return false
 
         val kaptKotlinGeneratedDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: run {
-            processingEnv.messager.printMessage(Diagnostic.Kind.ERROR, "Can't find the target directory for generated Kotlin files.")
+            processingEnv.messager.printMessage(
+                Diagnostic.Kind.ERROR,
+                "Can't find the target directory for generated Kotlin files."
+            )
             return false
         }
 
