@@ -99,14 +99,14 @@ or class by generating new code that creates curried versions of the functions.
 
 ## Roadmap
 
-- Finish the common-kotlin-lib custom plugin, so we can use it in our other projects
+- ~~Finish the common-kotlin-lib custom plugin, so we can use it in our other projects~~
     - Publish the plugin to plugins.gradle.com
 - Finish up alonzo, to generate curried functions and methods in classes
-- Write up some notes in `math` in jupyter notebook
+- Write up some notes for `math` in jupyter notebook
     - Practice problems in differential and integral calculus
     - Practice problems in linear algebra
     - Practice problems in statistics
 - `reveles` subproject to create a neural net from scratch 
-- `ignite` subproject to play with spark
-- `venturi` subproject to play with airflow
+- `ignite` subproject to play with spark by creating a kubernetes spark cluster
+- `venturi` subproject to play with airflow by creating a kubernetes airflow cluster
 - `pile` subproject to play with localstack

@@ -7,14 +7,26 @@
  * in the user manual at https://docs.gradle.org/7.0/userguide/multi_project_builds.html
  */
 
+// FIXME: this is temporary, until we publish common-kotlin-lib
+pluginManagement {
+    repositories {
+        //
+        gradlePluginPortal()
+        mavenCentral()
+        maven {
+            url = uri("../local-plugin-repository") 
+        }
+    }
+}
+
 rootProject.name = "decipher"
 include(
     "alonzo",
-    "common-kotlin-lib",
     "ignite",
     "math",
     "pile",
     "reveles",
     "subproject",
+    "tools",
     "venturi"
 )
