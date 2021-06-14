@@ -99,7 +99,7 @@ or class by generating new code that creates curried versions of the functions.
 
 ## Roadmap
 
-- Finish the common-kotlin-lib custom plugin, so we can use it in our other projects
+- ~~Finish the common-kotlin-lib custom plugin, so we can use it in our other projects~~
     - Publish the plugin to plugins.gradle.com
 - Finish up alonzo, to generate curried functions and methods in classes
 - Write up some notes for `math` in jupyter notebook

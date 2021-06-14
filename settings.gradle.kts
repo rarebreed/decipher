@@ -27,5 +27,6 @@ include(
     "pile",
     "reveles",
     "subproject",
+    "tools",
     "venturi"
 )

@@ -1,9 +1,8 @@
 version = "0.1.0"
 group = "com.github.rarebreed"
 
-//apply("com.github.rarebreed:common-kotlin-lib")
 plugins {
-   id("com.github.rarebreed.common.kotlin.lib") version "0.1.0-SNAPSHOT"
+   id("com.github.rarebreed.common.kotlin.lib")
 }
 
 dependencies {
@@ -16,7 +15,7 @@ tasks.register("make") {
     doLast {
         // Create the source dirs
         mkdir("$subDir/src/main/java")
-        mkdir("$subDir/src/main/kotlin")
+        mkdir("$subDir/src/main/kotlin/com/github/rarebreed/$dir")
         mkdir("$subDir/src/main/resources")
         mkdir("$subDir/src/test/kotlin")
 
@@ -33,7 +32,7 @@ tasks.register("make") {
             group = "app.khadga.$dir"
             
             plugins {
-            
+                id("com.github.rarebreed.common.kotlin.lib")
             }
             
             dependencies {
