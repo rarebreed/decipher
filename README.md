@@ -26,17 +26,41 @@ with scala 2.13.4 and we can compile scala 3 code that scala 2.12.3+ can use.
 
 I had originally intended to use kotlin, but a couple of things changed my mind:
 
-- The arrow library went through a massive change and didnt really offer what I wanted
-- Kotlin still doesnt have Typeclass support (KEEP-87)
-- Kotlin doesn't have HKT which makes some programming harder
-- Kotlin doesn't have true pattern matching
-- Kotlin sealed classes are painful compared to enums and Unions
+- The arrow library went through a massive change and doesn't really offer what I want now
+- Kotlin dropped support for Typeclasses in [KEEP-87](https://github.com/Kotlin/KEEP/pull/87)
+- Kotlin doesn't have HKT which means you can't really have Functors, Monads etc
+- Kotlin doesn't have true pattern matching or destructuring
+- scala3 enums, unions and intersections can better model your data than sealed classes
 - Spark is written in scala and will soon offer scala 2.13 support
 - Flink and kafka are also written primarily in scala
-- Jetbrains seems to be focused on android/swift development
+- Jetbrains seems to be focused on android/swift development for kotlin which does not interest me
 - The Idea IDE is the only editor in town for kotlin
-- The killer null checking feature is in scala3 now also
-- Kotlin coroutines are neat 
+    - scala has a language server called metals so it can be used in code, emacs, vim, sublime, IDEA
+- scala3 can now eliminate NPE like kotlin
+- Kotlin coroutines are neat, but scala fibers in ZIO or Cats Effect 3 are purely functional
+- scala3 has top level definitions (just like kotlin)
+- scala3 has function extensions (just like kotlin) 
+    - replaces some implicit use-cases
+- scala3 doesnt need a DI framework, because it's built into the language with using/given
+- scala has pure FP ecosystems like scalaz and typelevel (which I hoped arrow could have become)
+- scala3's typeclass support is a better way to model behavior than OOP
+    - can be done after the fact in separate source
+    - less ad-hocy than function extensions, but still lets you extend behavior to classes you dont own
+- scala3 has macros unlike kotlin
+
+On the good side compared to scala3
+
+- I think kotlin is more seamlessly integrated with java (as long as there are no coroutines)
+- It's easier to pick up kotlin (but my coworkers haven't shown an interest to do so)
+- Intellij IDEA integration with kotlin is top notch
+- Gradle is better documented than scala's default of sbt
+    - mill is a scala build tool gaining ground that is supposed to be simpler
+    - Gradle can compile scala too, so this is sort of moot
+- Kotlin's ecosystem is not as fragmented yet (scalaz vs tyoelevel vs cats vs zio)
+- Scala3 is still very new: spark examples will be in scala2 for a long time I am sure
+- Doing pure FP is not trivial (though technically not required in scala3)
+- kotlin's compile times are better
+
 
 So, given all the above, while kotlin is clearly superior to Java, it still leaves a lot to be desired
 as well.  I was hoping to use arrow to make kotlin more Functional, but they made a recent change that
@@ -48,11 +72,9 @@ complexity around implicits, and broken up many implicit features into their own
 scala3's enums, unions, intersections, using clauses, given clauses, HKT, type lambdas and many other
 new features, scala3 seems not only easier to learn than scala2, but more expressive and ergonomic.
 
-Kotlin is trying to appease web and mobile developers by permitting both compilation to JS, and compile
-to native code.  But honestly, typescript is superior to kotlin in several ways, and is just easier to
-integrate with existing JS modules.  And if I am going to write native code, it has to be in rust (who
-needs a garbage collector or runtime?).  Since Jetbrains seems to be focusing a lot on multiplatform
-development, language features itself has taken a backseat.
+Kotlin is trying to appease web and mobile developers by permitting both compilation to JS and native
+code.  But honestly, typescript is just a better choice for js, due to much easier integration with existing JS modules and a more powerful type system.  And if I am going to write native code, it hasto be in rust (who needs a garbage collector or runtime?).  Since Jetbrains seems to be focusing a lot on 
+multiplatform development, language features itself seem to have taken a backseat.
 
 Plus, it helps that a lot of the code we will be working on is for spark applications.  Currently,
 spark does not yet support scala 2.13.4+ but it soon will.  Once this happens, we can write scala3 
@@ -62,6 +84,10 @@ either in python or scala, this is a natural fit.
 While scala3 itself is not purely functional, there exists an ecosystem of libraries to make it so like
 typelevel, scalaz, zio, monix, etc.  Scala, like haskell, can model true type classes like Monads, 
 Functors, Applicatives, etc.
+
+The other languages that will be used will be rust and python3.  Rust will be used for some math heavy
+parts, and python3 will be used where needed for certain examples.  We will be using the java based
+version of tensorflow whenever possible though.
 
 ## Build tooling
 

@@ -11,13 +11,14 @@ dependencies {
 
 tasks.register("make") {
     val dir: String by project
+    val lang = "scala"
     val subDir = "../$dir"
     doLast {
         // Create the source dirs
         mkdir("$subDir/src/main/java")
-        mkdir("$subDir/src/main/kotlin/com/github/rarebreed/$dir")
+        mkdir("$subDir/src/main/$lang/com/github/rarebreed/$dir")
         mkdir("$subDir/src/main/resources")
-        mkdir("$subDir/src/test/kotlin")
+        mkdir("$subDir/src/test/$lang")
 
         // Create a dummy README.md
         file("$subDir/README.md").writeText("""
@@ -32,11 +33,12 @@ tasks.register("make") {
             group = "app.khadga.$dir"
             
             plugins {
-                id("com.github.rarebreed.common.kotlin.lib")
+                // id("com.github.rarebreed.common.kotlin.lib")
+                scala
             }
             
             dependencies {
-            
+                
             }
         """.trimIndent())
 
